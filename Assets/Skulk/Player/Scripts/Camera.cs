@@ -5,27 +5,27 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    [SerializeField] float ZoomPercent;
     [SerializeField] GameObject VirtualCamera;
     CinemachineFreeLook FreeLook;
-    CinemachineFreeLook.Orbit[] OriginalOrbits;
+    CinemachineFreeLook.Orbit[] NewOrbits;
+    [SerializeField] float ZoomSpeed;
     private void Start()
     {
         FreeLook = VirtualCamera.GetComponent<CinemachineFreeLook>();
-        OriginalOrbits = new CinemachineFreeLook.Orbit[FreeLook.m_Orbits.Length];
-
-        for (int i = 0; i < FreeLook.m_Orbits.Length; i++)
-        {
-            OriginalOrbits[i].m_Radius = FreeLook.m_Orbits[i].m_Radius;
-        }
+        NewOrbits = new CinemachineFreeLook.Orbit[FreeLook.m_Orbits.Length];
     }
     void Update()
     {
-        ZoomPercent += Mathf.Lerp(ZoomPercent, Input.mouseScrollDelta.y, 2);
-
-        for (int i = 0;i < OriginalOrbits.Length; i++)
+        for (int i = 0;i < FreeLook.m_Orbits.Length; i++)
         {
-            FreeLook.m_Orbits[i].m_Radius = OriginalOrbits[i].m_Radius * ZoomPercent;
+            NewOrbits[i].m_Radius = FreeLook.m_Orbits[i].m_Radius + Input.mouseScrollDelta.y;
+            Debug.Log("old orbits " + FreeLook.m_Orbits[i].m_Radius);
+            Debug.Log("new orbits " + NewOrbits[i].m_Radius);
+            if (FreeLook.m_Orbits[i].m_Radius < NewOrbits[i].m_Radius)
+            {
+                float Timer = Time.deltaTime * ZoomSpeed;
+                FreeLook.m_Orbits[i].m_Radius += Mathf.Lerp(FreeLook.m_Orbits[i].m_Radius, NewOrbits[i].m_Radius, Timer);
+            }
         }
     }
 }

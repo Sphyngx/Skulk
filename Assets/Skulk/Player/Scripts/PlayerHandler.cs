@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHandler : MonoBehaviour
 {
     GameObject Orientation;
+    GameObject Player;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -17,6 +18,7 @@ public class PlayerHandler : MonoBehaviour
                 Orientation = LocalOrientation.gameObject;
             }
         }
+        Player = gameObject.GetComponent<GameObject>();
     }
     void Update()
     {
