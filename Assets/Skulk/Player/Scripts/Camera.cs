@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
+    GameObject Player;
+    GameObject LookAt;
     [SerializeField] GameObject VirtualCamera;
-    CinemachineFreeLook FreeLook;
-    CinemachineFreeLook.Orbit[] NewOrbits;
     [SerializeField] float ZoomSpeed;
+    
     private void Start()
     {
-        FreeLook = VirtualCamera.GetComponent<CinemachineFreeLook>();
-        NewOrbits = new CinemachineFreeLook.Orbit[FreeLook.m_Orbits.Length];
-        if (VirtualCamera != null && FreeLook != null && NewOrbits != null)
+        Player = gameObject;
+        if (VirtualCamera != null && Player != null)
         {
             Debug.Log("Succesfully got all components for (Camera.cs)");
         }
@@ -24,14 +24,18 @@ public class Camera : MonoBehaviour
     }
     void Update()
     {
-        for (int i = 0;i < FreeLook.m_Orbits.Length; i++)
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            FreeLook.m_Orbits[i].m_Radius -= Input.mouseScrollDelta.y;
-            //if (FreeLook.m_Orbits[i].m_Radius < NewOrbits[i].m_Radius)
-            //{
-            //    float Timer = Time.deltaTime * ZoomSpeed;
-            //    FreeLook.m_Orbits[i].m_Radius += Mathf.Lerp(FreeLook.m_Orbits[i].m_Radius, NewOrbits[i].m_Radius, Timer);
-            //}
+            GameObject[] LookAt_Array = GameObject.FindGameObjectsWithTag("LookAt");
+            float Distance = Vector3.Distance(Player.transform.position, LookAt_Array[0].gameObject.transform.position);
+            for (int i = 0; i < LookAt_Array.Length; i++)
+            {
+                if (Vector3.Distance(Player.transform.position, LookAt_Array[i].gameObject.transform.position) < Distance)
+                {
+                    Distance = Vector3.Distance(Player.transform.position, LookAt_Array[i].gameObject.transform.position);
+                    LookAt = LookAt_Array[i].gameObject;
+                }
+            }
         }
     }
 }

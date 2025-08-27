@@ -59,15 +59,15 @@ public class PlayerHandler : MonoBehaviour
     }
     void Update()
     {
-        MouseX = Input.GetAxisRaw("Mouse X");
+        //MouseX = Input.GetAxisRaw("Mouse X");
         MouseY = Input.GetAxisRaw("Mouse Y");
 
-        RotationX -= MouseX;
+        //RotationX -= MouseX;
         RotationY -= MouseY;
 
         RotationY = Mathf.Clamp(RotationY, -90, 90);
 
-        Orientation.transform.eulerAngles = new Vector3(RotationY, RotationX, 0);
+        Orientation.transform.eulerAngles = new Vector3(RotationY, Camera.transform.eulerAngles.y, 0);
 
         Ray GroundCheck = new Ray(PlayerModel.transform.position, -PlayerModel.transform.up);
         Grounded = Physics.Raycast(GroundCheck, 1.2f);

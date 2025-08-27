@@ -29,18 +29,20 @@ public class Movement : MonoBehaviour
     void Update()
     {
         float Horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float Vertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 MoveDirection = (PlayerHandler.Orientation.transform.forward * vertical + PlayerHandler.Orientation.transform.right * Horizontal).normalized;
+        float Yaw = PlayerHandler.Orientation.transform.eulerAngles.y;
+        Quaternion YawRotation = Quaternion.Euler(0, Yaw, 0);
+
+        Vector3 MoveDirection = YawRotation * new Vector3(Horizontal, 0, Vertical).normalized;
 
         Controller.SimpleMove(MoveDirection * MoveSpeed);
-
+        
         //Add jump logic
         
             if (Input.GetKeyDown(KeyCode.Space) && PlayerHandler.Grounded)
             {
-                Vector3 Velocity = new Vector3(0, JumpPower, 0);
-                Controller.SimpleMove(Velocity * Time.deltaTime); 
+                
             }
         
     }
