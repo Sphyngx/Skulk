@@ -36,6 +36,7 @@ public class Camera : MonoBehaviour
                     LookAt = LookAt_Array[i].gameObject;
                 }
             }
+        
         }
     }
 }
