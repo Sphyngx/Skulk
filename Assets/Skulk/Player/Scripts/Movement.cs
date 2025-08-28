@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
 
         Vector3 MoveDirection = YawRotation * new Vector3(Horizontal, 0, Vertical).normalized;
 
-        Controller.SimpleMove(MoveDirection * MoveSpeed);
+        Controller.SimpleMove(MoveDirection * PlayerMoveSpeed);
         
         //Add jump logic?
     }

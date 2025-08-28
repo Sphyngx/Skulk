@@ -10,7 +10,7 @@ public class PlayerHandler : MonoBehaviour
     Camera Camera;
 
     [NonSerialized]public GameObject Orientation;
-    [NonSerialized] public Vector3 OrientationX;
+    [NonSerialized]public Vector3 OrientationX;
     [NonSerialized]public Vector3 OrientationY;
     GameObject Player;
     GameObject PlayerModel;
@@ -42,7 +42,7 @@ public class PlayerHandler : MonoBehaviour
         Player = gameObject;
         this.Camera = gameObject.GetComponent<Camera>();
 
-        if (Camera.FirstPersonCamera != null && Player != null && Orientation != null && PlayerModel != null)
+        if (Player != null && Orientation != null && PlayerModel != null)
         {
             Debug.Log("Succesfully got all components for (PlayerHandler.cs)");
         }
@@ -55,7 +55,7 @@ public class PlayerHandler : MonoBehaviour
     }
     void Update()
     {
-        Orientation.transform.eulerAngles = Camera.CameraRotation();
+        Orientation.transform.eulerAngles = Camera.CameraRotation(Camera.CameraLock);
         OrientationX = Orientation.transform.forward;
         OrientationX.y = 0;
         OrientationX.Normalize();

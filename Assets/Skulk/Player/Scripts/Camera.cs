@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using Cinemachine;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class Camera : MonoBehaviour
 
     GameObject Player;
     GameObject LookAt;
+    public bool LookAt_Bool = false;
+    public bool CameraLock = false;
     [NonSerialized] public GameObject FirstPersonCamera;
     [SerializeField] GameObject FirstPersonCamLocation;
     [SerializeField] float ZoomSpeed;
@@ -23,7 +26,8 @@ public class Camera : MonoBehaviour
     private void Start()
     {
         FirstPersonCamera = GameObject.FindGameObjectWithTag("1stPersonCamera");
-        if (FirstPersonCamera != null)
+        Player = gameObject;
+        if (FirstPersonCamera != null && Player != null && FirstPersonCamLocation != null)
     
         {
             Debug.Log("Succesfully got all components for (Camera.cs)");
@@ -36,34 +40,55 @@ public class Camera : MonoBehaviour
     void Update()
     {
         FirstPersonCamera.transform.position = FirstPersonCamLocation.transform.position;
-        FirstPersonCamera.transform.eulerAngles = CameraRotation();
+        FirstPersonCamera.transform.eulerAngles = CameraRotation(CameraLock);
+
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !LookAt_Bool)
+        {
+            LookAt_Func(LookAt_Bool);
+            LookAt_Bool = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightControl) && LookAt_Bool) 
+        {
+            LookAt_Func(LookAt_Bool);
+            LookAt_Bool = false;
+        }
     }
 
-    public Vector3 CameraRotation()
+    public Vector3 CameraRotation(bool CameraLock)
     {
-        MouseX = Input.GetAxisRaw("Mouse X");
-        MouseY = Input.GetAxisRaw("Mouse Y");
+        if (!CameraLock)
+        {
+            MouseX = Input.GetAxisRaw("Mouse X");
+            MouseY = Input.GetAxisRaw("Mouse Y");
 
-        RotationX += MouseX * Sensetivity;
-        RotationY -= MouseY * Sensetivity;
+            RotationX += MouseX * Sensetivity;
+            RotationY -= MouseY * Sensetivity;
 
-        RotationY = Mathf.Clamp(RotationY, -90, 90);
+            RotationY = Mathf.Clamp(RotationY, -90, 90);
 
-        return new Vector3(RotationY, RotationX, 0);
+            return new Vector3(RotationY, RotationX, 0);
+        }
+        return new Vector3();
+    }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+    Vector3 LookAt_Func(bool LookAt_Bool)
+    {
+        if (!LookAt_Bool)
         {
             GameObject[] LookAt_Array = GameObject.FindGameObjectsWithTag("LookAt");
+            Debug.Log(LookAt_Array.Length);
             float Distance = Vector3.Distance(Player.transform.position, LookAt_Array[0].gameObject.transform.position);
             for (int i = 0; i < LookAt_Array.Length; i++)
             {
                 if (Vector3.Distance(Player.transform.position, LookAt_Array[i].gameObject.transform.position) < Distance)
                 {
                     Distance = Vector3.Distance(Player.transform.position, LookAt_Array[i].gameObject.transform.position);
-                    LookAt = LookAt_Array[i].gameObject;
+                    LookAt = LookAt_Array[i];
                 }
             }
-        
+            Debug.Log("new LookAt!: " + LookAt.name);
+            return LookAt.transform.position;
         }
+        return new Vector3(0,0,0);
     }
 }
