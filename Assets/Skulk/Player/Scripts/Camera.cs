@@ -13,6 +13,8 @@ public class Camera : MonoBehaviour
     float RotationX;
     float RotationY;
 
+    GameObject Player;
+    GameObject LookAt;
     [NonSerialized] public GameObject FirstPersonCamera;
     [SerializeField] GameObject FirstPersonCamLocation;
     [SerializeField] float ZoomSpeed;
@@ -22,6 +24,7 @@ public class Camera : MonoBehaviour
     {
         FirstPersonCamera = GameObject.FindGameObjectWithTag("1stPersonCamera");
         if (FirstPersonCamera != null)
+    
         {
             Debug.Log("Succesfully got all components for (Camera.cs)");
         }
@@ -32,7 +35,6 @@ public class Camera : MonoBehaviour
     }
     void Update()
     {
-
         FirstPersonCamera.transform.position = FirstPersonCamLocation.transform.position;
         FirstPersonCamera.transform.eulerAngles = CameraRotation();
     }
@@ -48,5 +50,20 @@ public class Camera : MonoBehaviour
         RotationY = Mathf.Clamp(RotationY, -90, 90);
 
         return new Vector3(RotationY, RotationX, 0);
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            GameObject[] LookAt_Array = GameObject.FindGameObjectsWithTag("LookAt");
+            float Distance = Vector3.Distance(Player.transform.position, LookAt_Array[0].gameObject.transform.position);
+            for (int i = 0; i < LookAt_Array.Length; i++)
+            {
+                if (Vector3.Distance(Player.transform.position, LookAt_Array[i].gameObject.transform.position) < Distance)
+                {
+                    Distance = Vector3.Distance(Player.transform.position, LookAt_Array[i].gameObject.transform.position);
+                    LookAt = LookAt_Array[i].gameObject;
+                }
+            }
+        
+        }
     }
 }

@@ -29,11 +29,14 @@ public class Movement : MonoBehaviour
     void Update()
     {
         float Horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        
-        Vector3 MoveDirection = (PlayerHandler.OrientationX * vertical + PlayerHandler.Orientation.transform.right * Horizontal).normalized;
+        float Vertical = Input.GetAxisRaw("Vertical");
 
-        Controller.SimpleMove(MoveDirection * PlayerMoveSpeed);
+        float Yaw = PlayerHandler.Orientation.transform.eulerAngles.y;
+        Quaternion YawRotation = Quaternion.Euler(0, Yaw, 0);
+
+        Vector3 MoveDirection = YawRotation * new Vector3(Horizontal, 0, Vertical).normalized;
+
+        Controller.SimpleMove(MoveDirection * MoveSpeed);
         
         //Add jump logic?
     }

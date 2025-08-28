@@ -6,6 +6,7 @@ TagManager:
   tags:
   - 1stPersonCamera
   - 3rdPersonCamera
+  - LookAt
   layers:
   - Default
   - TransparentFX

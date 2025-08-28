@@ -35,6 +35,8 @@ public class TestHandler : MonoBehaviour
         RotationY = Mathf.Clamp(RotationY, -90, 90);
 
         //Box.transform.eulerAngles = new Vector3(RotationY, RotationX, 0);
-        Box.transform.eulerAngles = new Vector3(RotationY, RotationX, 0);
+        //Box.transform.eulerAngles = new Vector3(RotationY, RotationX, 0);
+
+        Box.transform.eulerAngles = new Vector3(RotationY, Camera.transform.eulerAngles.y, 0);
     }
 }
