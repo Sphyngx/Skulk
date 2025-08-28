@@ -1,28 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
-    [NonSerialized] public GameObject Orientation;
+    Camera Camera;
+
+    [NonSerialized]public GameObject Orientation;
+    [NonSerialized] public Vector3 OrientationX;
+    [NonSerialized]public Vector3 OrientationY;
     GameObject Player;
     GameObject PlayerModel;
-    GameObject Camera;
-
-    float MouseX;
-    float MouseY;
-
-    float RotationX;
-    float RotationY;
-
-    [SerializeField] float Sensitivity;
-
     public bool Grounded;
+
     void Start()
     {
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
 
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
@@ -43,10 +40,9 @@ public class PlayerHandler : MonoBehaviour
         }
 
         Player = gameObject;
+        this.Camera = gameObject.GetComponent<Camera>();
 
-        Camera = GameObject.FindGameObjectWithTag("MainCamera");
-
-        if (Camera != null && Player != null && Orientation != null && PlayerModel != null)
+        if (Camera.FirstPersonCamera != null && Player != null && Orientation != null && PlayerModel != null)
         {
             Debug.Log("Succesfully got all components for (PlayerHandler.cs)");
         }
@@ -55,19 +51,17 @@ public class PlayerHandler : MonoBehaviour
             Debug.LogWarning("Unsuccesfull with gathering components for (PlayerHandler.cs)");
         }
 
-        RotationY = Orientation.transform.eulerAngles.y;
+        
     }
     void Update()
     {
-        MouseX = Input.GetAxisRaw("Mouse X");
-        MouseY = Input.GetAxisRaw("Mouse Y");
-
-        RotationX -= MouseX;
-        RotationY -= MouseY;
-
-        RotationY = Mathf.Clamp(RotationY, -90, 90);
-
-        Orientation.transform.eulerAngles = new Vector3(RotationY, RotationX, 0);
+        Orientation.transform.eulerAngles = Camera.CameraRotation();
+        OrientationX = Orientation.transform.forward;
+        OrientationX.y = 0;
+        OrientationX.Normalize();
+        OrientationY = Orientation.transform.forward;
+        OrientationY.x = 0;
+        OrientationY.Normalize();
 
         Ray GroundCheck = new Ray(PlayerModel.transform.position, -PlayerModel.transform.up);
         Grounded = Physics.Raycast(GroundCheck, 1.2f);

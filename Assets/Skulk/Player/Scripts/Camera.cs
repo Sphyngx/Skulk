@@ -1,19 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cinemachine;
 using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    [SerializeField] GameObject VirtualCamera;
-    CinemachineFreeLook FreeLook;
-    CinemachineFreeLook.Orbit[] NewOrbits;
+    float MouseX;
+    float MouseY;
+
+    float RotationX;
+    float RotationY;
+
+    [NonSerialized] public GameObject FirstPersonCamera;
+    [SerializeField] GameObject FirstPersonCamLocation;
     [SerializeField] float ZoomSpeed;
+    [SerializeField] float Sensetivity;
+    [SerializeField] Vector3 Offsett;
     private void Start()
     {
-        FreeLook = VirtualCamera.GetComponent<CinemachineFreeLook>();
-        NewOrbits = new CinemachineFreeLook.Orbit[FreeLook.m_Orbits.Length];
-        if (VirtualCamera != null && FreeLook != null && NewOrbits != null)
+        FirstPersonCamera = GameObject.FindGameObjectWithTag("1stPersonCamera");
+        if (FirstPersonCamera != null)
         {
             Debug.Log("Succesfully got all components for (Camera.cs)");
         }
@@ -24,14 +32,21 @@ public class Camera : MonoBehaviour
     }
     void Update()
     {
-        for (int i = 0;i < FreeLook.m_Orbits.Length; i++)
-        {
-            FreeLook.m_Orbits[i].m_Radius -= Input.mouseScrollDelta.y;
-            //if (FreeLook.m_Orbits[i].m_Radius < NewOrbits[i].m_Radius)
-            //{
-            //    float Timer = Time.deltaTime * ZoomSpeed;
-            //    FreeLook.m_Orbits[i].m_Radius += Mathf.Lerp(FreeLook.m_Orbits[i].m_Radius, NewOrbits[i].m_Radius, Timer);
-            //}
-        }
+
+        FirstPersonCamera.transform.position = FirstPersonCamLocation.transform.position;
+        FirstPersonCamera.transform.eulerAngles = CameraRotation();
+    }
+
+    public Vector3 CameraRotation()
+    {
+        MouseX = Input.GetAxisRaw("Mouse X");
+        MouseY = Input.GetAxisRaw("Mouse Y");
+
+        RotationX += MouseX * Sensetivity;
+        RotationY -= MouseY * Sensetivity;
+
+        RotationY = Mathf.Clamp(RotationY, -90, 90);
+
+        return new Vector3(RotationY, RotationX, 0);
     }
 }

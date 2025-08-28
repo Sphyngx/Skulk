@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     CharacterController Controller;
     PlayerHandler PlayerHandler;
 
-    [SerializeField] float MoveSpeed;
+    [SerializeField] float PlayerMoveSpeed;
     [SerializeField] float JumpPower;
 
     private void Start()
@@ -30,18 +30,11 @@ public class Movement : MonoBehaviour
     {
         float Horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-
-        Vector3 MoveDirection = (PlayerHandler.Orientation.transform.forward * vertical + PlayerHandler.Orientation.transform.right * Horizontal).normalized;
-
-        Controller.SimpleMove(MoveDirection * MoveSpeed);
-
-        //Add jump logic
         
-            if (Input.GetKeyDown(KeyCode.Space) && PlayerHandler.Grounded)
-            {
-                Vector3 Velocity = new Vector3(0, JumpPower, 0);
-                Controller.SimpleMove(Velocity * Time.deltaTime); 
-            }
+        Vector3 MoveDirection = (PlayerHandler.OrientationX * vertical + PlayerHandler.Orientation.transform.right * Horizontal).normalized;
+
+        Controller.SimpleMove(MoveDirection * PlayerMoveSpeed);
         
+        //Add jump logic?
     }
 }
