@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 560623524}
   - component: {fileID: 560623523}
   - component: {fileID: 560623522}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LookAt (2)
   m_TagString: LookAt
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 706629563}
   - component: {fileID: 706629562}
   - component: {fileID: 706629561}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LookAt (1)
   m_TagString: LookAt
   m_Icon: {fileID: 0}
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f918aa1248a5c4fae1600887c3f0be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerMoveSpeed: 0
+  PlayerMoveSpeed: 10
   JumpPower: 0
 --- !u!143 &1170021975
 CharacterController:
@@ -542,6 +542,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8446fc1a823aaa041b1aa24ea6bba080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LookAtRadius: 20
+  LookAtLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  ScriptedLookAt: 0
+  UserLookAt: 0
   FirstPersonCamLocation: {fileID: 1512803779}
   ZoomSpeed: 0
   Sensetivity: 2
@@ -789,7 +795,7 @@ GameObject:
   - component: {fileID: 1558900946}
   - component: {fileID: 1558900945}
   - component: {fileID: 1558900944}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LookAt
   m_TagString: LookAt
   m_Icon: {fileID: 0}

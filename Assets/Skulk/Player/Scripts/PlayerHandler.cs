@@ -55,13 +55,26 @@ public class PlayerHandler : MonoBehaviour
     }
     void Update()
     {
-        Orientation.transform.eulerAngles = Camera.CameraRotation(Camera.CameraLock);
-        OrientationX = Orientation.transform.forward;
-        OrientationX.y = 0;
-        OrientationX.Normalize();
-        OrientationY = Orientation.transform.forward;
-        OrientationY.x = 0;
-        OrientationY.Normalize();
+        if (Camera.UserLookAt)
+        {
+            Orientation.transform.forward = Camera.LookAtTarget(Camera.UserLookAt, Camera.ScriptedLookAt);
+            OrientationX = Orientation.transform.forward;
+            OrientationX.y = 0;
+            OrientationX.Normalize();
+            OrientationY = Orientation.transform.forward;
+            OrientationY.x = 0;
+            OrientationY.Normalize();
+        }
+        else
+        {
+            Orientation.transform.eulerAngles = Camera.CameraRotation(new Vector3(0, 0, 0));
+            OrientationX = Orientation.transform.forward;
+            OrientationX.y = 0;
+            OrientationX.Normalize();
+            OrientationY = Orientation.transform.forward;
+            OrientationY.x = 0;
+            OrientationY.Normalize();
+        }
 
         Ray GroundCheck = new Ray(PlayerModel.transform.position, -PlayerModel.transform.up);
         Grounded = Physics.Raycast(GroundCheck, 1.2f);
