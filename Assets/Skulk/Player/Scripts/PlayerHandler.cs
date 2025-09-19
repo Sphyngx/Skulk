@@ -13,7 +13,7 @@ public class PlayerHandler : MonoBehaviour
     [NonSerialized]public Vector3 OrientationX;
     [NonSerialized]public Vector3 OrientationY;
     GameObject Player;
-    GameObject PlayerModel;
+    [SerializeField]GameObject PlayerModel;
     public bool Grounded;
 
     void Start()
@@ -64,6 +64,8 @@ public class PlayerHandler : MonoBehaviour
             OrientationY = Orientation.transform.forward;
             OrientationY.x = 0;
             OrientationY.Normalize();
+
+            PlayerModel.transform.forward = OrientationX;
         }
         else
         {
@@ -74,10 +76,12 @@ public class PlayerHandler : MonoBehaviour
             OrientationY = Orientation.transform.forward;
             OrientationY.x = 0;
             OrientationY.Normalize();
+
+            PlayerModel.transform.forward = OrientationX;
         }
 
-        Ray GroundCheck = new Ray(PlayerModel.transform.position, -PlayerModel.transform.up);
-        Grounded = Physics.Raycast(GroundCheck, 1.2f);
+        //Ray GroundCheck = new Ray(PlayerModel.transform.position, -PlayerModel.transform.up);
+        //Grounded = Physics.Raycast(GroundCheck, 1.2f);
         
     }
 }
