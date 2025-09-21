@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Threading;
-using Cinemachine;
 using UnityEngine;
 
 public class Camera : MonoBehaviour

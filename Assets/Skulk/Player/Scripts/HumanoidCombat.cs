@@ -7,7 +7,8 @@ public class HumanoidCombat : MonoBehaviour
     GameObject ScriptOwner;
     GameObject Orientation;
     public GameObject Weapon;
-    [SerializeField]Animator Animator;
+    [SerializeField] Animator Animator;
+    [SerializeField] WeaponEventReciever WeaponEventReciever_;
 
     public bool IsBlocking;
     public bool IsParry;
@@ -50,7 +51,6 @@ public class HumanoidCombat : MonoBehaviour
         if (Animator.GetCurrentAnimatorStateInfo(0).IsName("IdleState"))
         {
             Animator.SetTrigger("M1Trigger");
-           
         }
     }
     public void MeleeM2()
