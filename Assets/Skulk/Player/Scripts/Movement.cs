@@ -11,6 +11,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float PlayerMoveSpeed;
     [SerializeField] float JumpPower;
 
+    public float Horizontal;
+    public float Vertical;
     private void Start()
     {
         Player = gameObject;
@@ -28,8 +30,8 @@ public class Movement : MonoBehaviour
     }
     void Update()
     {
-        float Horizontal = Input.GetAxisRaw("Horizontal");
-        float Vertical = Input.GetAxisRaw("Vertical");
+        Horizontal = Input.GetAxisRaw("Horizontal");
+        Vertical = Input.GetAxisRaw("Vertical");
 
         float Yaw = PlayerHandler.Orientation.transform.eulerAngles.y;
         Quaternion YawRotation = Quaternion.Euler(0, Yaw, 0);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class HumanoidCombat : MonoBehaviour
@@ -7,12 +8,12 @@ public class HumanoidCombat : MonoBehaviour
     GameObject ScriptOwner;
     GameObject Orientation;
     public GameObject Weapon;
-    [SerializeField] Animator Animator;
+    public Animator Animator;
     [SerializeField] WeaponEventReciever WeaponEventReciever_;
-
     public bool IsBlocking;
     public bool IsParry;
     public bool IsSwinging;
+    public Collider ParryHitbox;
 
     public int Damage;
     void Start()
@@ -26,6 +27,14 @@ public class HumanoidCombat : MonoBehaviour
             {
                 Orientation = LocalOrientation.gameObject;
             }
+        }
+        if (ScriptOwner != null && Orientation != null && Animator != null && WeaponEventReciever_ != null)
+        {
+            Debug.Log("Succesfully got all components for (HumanoidCombat.cs)");
+        }
+        else
+        {
+            Debug.LogWarning("Unsuccesfull with gathering components for (HumanoidCombat.cs)");
         }
     }
 
@@ -42,8 +51,8 @@ public class HumanoidCombat : MonoBehaviour
         else if (Input.GetMouseButtonUp(1))
         {
             IsBlocking = false;
+            Animator.SetBool("BlockBool", false);
         }
-        
     }
 
     public void MeleeM1()
@@ -61,12 +70,16 @@ public class HumanoidCombat : MonoBehaviour
     {
         if (Animator.GetCurrentAnimatorStateInfo(0).IsName("IdleState"))
         {
-            IsBlocking = true;
+            Animator.SetTrigger("ParryWindowTrigger");
+            Animator.SetBool("BlockBool", true);
+            ParryHitbox.enabled = true;
             IsParry = true;
+            IsBlocking = true;
         }
     }
     public void EndParryWindow()
     {
+        ParryHitbox.enabled = false;
         IsParry = false;
     }
 }

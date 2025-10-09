@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class WeaponEventReciever : MonoBehaviour
 {
-    public HumanoidCombat HumanoidCombat_;
-
+    public HumanoidCombat HumanoidCombat;
     
     private void OnTriggerEnter(Collider Hit)
     {
         Debug.Log(Hit.gameObject.name);
-        Status Status_ = Hit.gameObject.GetComponent<Status>();
-        if (Status_ != null)
+        Status OponentStatus = Hit.gameObject.GetComponent<Status>();
+        if (OponentStatus != null)
         {
-            Status_.DealDamage(HumanoidCombat_.Damage);
+                OponentStatus.DealDamage(HumanoidCombat.Damage);
         }
+    }
+    public void EndParryWindow()
+    {
+        HumanoidCombat.EndParryWindow();
     }
 }

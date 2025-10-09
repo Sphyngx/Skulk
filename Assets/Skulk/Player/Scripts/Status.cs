@@ -1,17 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Status : MonoBehaviour
 {
+    [SerializeField]HumanoidCombat HumanoidCombat;
     [SerializeField]int Health;
     [SerializeField]int Posture;
 
-    bool DealPostureDamage = false;
+    
+    private void Start()
+    {
+        HumanoidCombat = gameObject.GetComponent<HumanoidCombat>();
 
+        if (HumanoidCombat != null)
+        {
+            Debug.Log("Succesfully got all components for (Status.cs)");
+        }
+        else
+        {
+            Debug.LogWarning("Unsuccesfull with gathering components for (Status.cs)");
+            if (HumanoidCombat == null)
+            {
+                Debug.LogWarning(gameObject + " does not have a Combat script");
+            }
+        }
+    }
     public void DealDamage(int damage)
     {
-        if (DealPostureDamage)
+        if (HumanoidCombat.IsParry)
+        {
+            Debug.Log(gameObject + " Parried an attack");
+            HumanoidCombat.Animator.SetTrigger("ParryTrigger");
+        }
+        else if (HumanoidCombat.IsBlocking)
         {
             Posture -= damage;
             if (Posture <= 0)
