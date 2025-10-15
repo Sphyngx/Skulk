@@ -16,8 +16,13 @@ public class AIBrain : MonoBehaviour
     [Header("FollowTarget")]
     public bool FollowTarget;
     public GameObject Target;
+    [Header("Think Settings")]
+    [SerializeField] float ThinkTimer;
+    float ThinkTime;
     void Update()
     {
+        //all of this will be removed and changed to fit the "think" function
+
         if (RoamBehaviour)
         {
             if (RoamTimer >= RoamTimerMax)
@@ -45,6 +50,35 @@ public class AIBrain : MonoBehaviour
                 Target = null;
             }
         }
+
+        //Think functionality
+
+        ThinkTime += Time.deltaTime;
+        if (ThinkTimer < ThinkTime)
+        {
+            Think();
+            ThinkTime = 0;
+        }
+    }
+
+     void Think()
+    {
+        Debug.Log(gameObject.name + " Had a Thought");
+        //gather variables from Behaviours
+
+        /*switch (Behaviour[])
+        {
+            case Fighter:Behaviour[0]; 
+                priority == player
+                break;
+            case Frightened:Behaviour[1]; 
+                prioriry == get away from player / run randomly
+                break;
+            case ???:Behaviour[2]; 
+                
+                break;
+        }*/
+
     }
 
     void FindDestination()
@@ -58,3 +92,5 @@ public class AIBrain : MonoBehaviour
         }
     }
 }
+
+
