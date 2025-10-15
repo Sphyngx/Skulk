@@ -10,11 +10,11 @@ public class HumanoidCombat : MonoBehaviour
     public GameObject Weapon;
     public Animator Animator;
     [SerializeField] WeaponEventReciever WeaponEventReciever_;
+    [SerializeField] bool PlayerOwner;
     public bool IsBlocking;
     public bool IsParry;
     public bool IsSwinging;
     public Collider ParryHitbox;
-
     public int Damage;
     void Start()
     {
@@ -40,18 +40,21 @@ public class HumanoidCombat : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (PlayerOwner)
         {
-            MeleeM1();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            Block();
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            IsBlocking = false;
-            Animator.SetBool("BlockBool", false);
+            if (Input.GetMouseButtonDown(0))
+            {
+                MeleeM1();
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                Block();
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                IsBlocking = false;
+                Animator.SetBool("BlockBool", false);
+            }
         }
     }
 
@@ -68,7 +71,7 @@ public class HumanoidCombat : MonoBehaviour
     }
     public void Block()
     {
-        if (Animator.GetCurrentAnimatorStateInfo(0).IsName("IdleState"))
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName("IdleState") || Animator.GetCurrentAnimatorStateInfo(0).IsName("Parry"))
         {
             Animator.SetTrigger("ParryWindowTrigger");
             Animator.SetBool("BlockBool", true);

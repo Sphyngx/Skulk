@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AIBrain : MonoBehaviour
 {
+    AIEyes AIEyes;
     [Header("Roaming")]
     public bool RoamBehaviour;
     public bool AtDestination;
@@ -12,6 +13,9 @@ public class AIBrain : MonoBehaviour
     [SerializeField] float RoamTimer = 0;
     [SerializeField] float RoamTimerMax;
     public Vector3 RandomDestination;
+    [Header("FollowTarget")]
+    public bool FollowTarget;
+    public GameObject Target;
     void Update()
     {
         if (RoamBehaviour)
@@ -27,6 +31,19 @@ public class AIBrain : MonoBehaviour
         {
             AtDestination = true;
             RoamTimer += Time.deltaTime;
+        }
+
+        if (FollowTarget)
+        {
+            if (AIEyes.SeeingPlayer)
+            {
+                Target = AIEyes.Player;
+
+            }
+            else
+            {
+                Target = null;
+            }
         }
     }
 

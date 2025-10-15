@@ -25,7 +25,8 @@ public class AIEyes : MonoBehaviour
     {
         if (!Physics.Linecast(gameObject.transform.position, Player.transform.position,1 << 7))
         {
-            if (Mathf.Asin(Player.transform.position.z/Vector3.Distance(gameObject.transform.position,Player.transform.position)) / Mathf.PI * 180 > VisionAngle)
+            float AngleToPlayer = Vector3.Angle(gameObject.transform.forward, Player.transform.position - gameObject.transform.position);
+            if (AngleToPlayer <  VisionAngle)
             {
                 SeeingPlayer = true;
             }

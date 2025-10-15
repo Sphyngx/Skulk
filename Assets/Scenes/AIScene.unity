@@ -873,7 +873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1505652653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -954,7 +954,7 @@ Transform:
   m_GameObject: {fileID: 1505652652}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.45, y: 2.14, z: 1.26}
+  m_LocalPosition: {x: 2.17, y: 2.14, z: 0.65}
   m_LocalScale: {x: 0.5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1134,6 +1134,7 @@ MonoBehaviour:
   Weapon: {fileID: 1972238976}
   Animator: {fileID: 1972238980}
   WeaponEventReciever_: {fileID: 1972238979}
+  PlayerOwner: 0
   IsBlocking: 0
   IsParry: 0
   IsSwinging: 0
@@ -1169,7 +1170,7 @@ MonoBehaviour:
   Player: {fileID: 1686901341}
   SeeingPlayer: 0
   VisionRange: 10
-  VisionAngle: 25
+  VisionAngle: 70
 --- !u!143 &1676719168
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1244,8 +1245,10 @@ MonoBehaviour:
   AtDestination: 0
   RoamRange: 10
   RoamTimer: 0
-  RoamTimerMax: 10
+  RoamTimerMax: 3
   RandomDestination: {x: 0, y: 1.08, z: 0}
+  FollowTarget: 0
+  Target: {fileID: 0}
 --- !u!1 &1686901341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1287,7 @@ MonoBehaviour:
   Weapon: {fileID: 890821186}
   Animator: {fileID: 890821189}
   WeaponEventReciever_: {fileID: 890821188}
+  PlayerOwner: 1
   IsBlocking: 0
   IsParry: 0
   IsSwinging: 0
