@@ -1228,7 +1228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: {fileID: 1676719168}
   AiBrain: {fileID: 1676719171}
-  MoveSpeed: 10
+  MoveSpeed: 5
 --- !u!114 &1676719171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1244,11 +1244,12 @@ MonoBehaviour:
   RoamBehaviour: 0
   AtDestination: 0
   RoamRange: 10
-  RoamTimer: 0
-  RoamTimerMax: 3
+  RoamTimer: 1
   RandomDestination: {x: 0, y: 1.08, z: 0}
   FollowTarget: 0
   Target: {fileID: 0}
+  SelectedAIBehaviour: {fileID: 0}
+  ThinkTimer: 1
 --- !u!1 &1686901341
 GameObject:
   m_ObjectHideFlags: 0

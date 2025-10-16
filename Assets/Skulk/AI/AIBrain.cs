@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
+
 public class AIBrain : MonoBehaviour
 {
     AIEyes AIEyes;
@@ -10,13 +11,15 @@ public class AIBrain : MonoBehaviour
     public bool RoamBehaviour;
     public bool AtDestination;
     [SerializeField] float RoamRange;
-    [SerializeField] float RoamTimer = 0;
-    [SerializeField] float RoamTimerMax;
+    float RoamTime = 0;
+    [SerializeField] float RoamTimer;
     public Vector3 RandomDestination;
     [Header("FollowTarget")]
     public bool FollowTarget;
     public GameObject Target;
     [Header("Think Settings")]
+    [SerializeField] AIBehaviour SelectedAIBehaviour;
+    AIBehaviour[] AIBehaviours;
     [SerializeField] float ThinkTimer;
     float ThinkTime;
     void Update()
@@ -25,17 +28,17 @@ public class AIBrain : MonoBehaviour
 
         if (RoamBehaviour)
         {
-            if (RoamTimer >= RoamTimerMax)
+            if (RoamTime >= RoamTimer)
             {
                 FindDestination();
                 AtDestination = false;
-                RoamTimer = 0;
+                RoamTime = 0;
             }
         }
         if (RoamBehaviour && Vector3.Distance(gameObject.transform.position,RandomDestination) < 0.1f)
         {
             AtDestination = true;
-            RoamTimer += Time.deltaTime;
+            RoamTime += Time.deltaTime;
         }
 
         if (FollowTarget)
@@ -56,29 +59,30 @@ public class AIBrain : MonoBehaviour
         ThinkTime += Time.deltaTime;
         if (ThinkTimer < ThinkTime)
         {
-            Think();
+            Think(SelectedAIBehaviour);
             ThinkTime = 0;
         }
     }
 
-     void Think()
+     void Think(AIBehaviour Behaviour)
     {
         Debug.Log(gameObject.name + " Had a Thought");
         //gather variables from Behaviours
 
-        /*switch (Behaviour[])
+        for (int i = 0; i < AIBehaviours.Length; i++)
         {
-            case Fighter:Behaviour[0]; 
-                priority == player
-                break;
-            case Frightened:Behaviour[1]; 
-                prioriry == get away from player / run randomly
-                break;
-            case ???:Behaviour[2]; 
-                
-                break;
-        }*/
-
+            if (AIBehaviours[i] == Behaviour) 
+            {
+                if (Behaviour.Conditions(AIEyes) == true)
+                {
+                    Behaviour.ConditionsMet();
+                }
+                else
+                {
+                    Behaviour.ConditionsNotMet();
+                }
+            }
+        }
     }
 
     void FindDestination()
