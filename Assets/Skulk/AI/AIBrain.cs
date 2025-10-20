@@ -73,13 +73,9 @@ public class AIBrain : MonoBehaviour
         {
             if (AIBehaviours[i] == Behaviour) 
             {
-                if (Behaviour.Conditions(AIEyes) == true)
+                if (Behaviour.LookForPlayer() == true && AIEyes.SeeingPlayer == false)
                 {
-                    Behaviour.ConditionsMet();
-                }
-                else
-                {
-                    Behaviour.ConditionsNotMet();
+                    
                 }
             }
         }
