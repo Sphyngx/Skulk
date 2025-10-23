@@ -873,7 +873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1505652653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1241,14 +1241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab3bc3d5f91a6c45a5b6c58e3782fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoamBehaviour: 0
-  AtDestination: 0
+  Player: {fileID: 1686901341}
+  Destination: {x: 0, y: 0, z: 0}
+  RoamPriority: 1
+  SeekPriority: 0
+  RoamBehaviour: 1
   RoamRange: 10
-  RoamTimer: 1
-  RandomDestination: {x: 0, y: 1.08, z: 0}
-  FollowTarget: 0
+  SeekBehavior: 0
   Target: {fileID: 0}
-  SelectedAIBehaviour: {fileID: 0}
   ThinkTimer: 1
 --- !u!1 &1686901341
 GameObject:

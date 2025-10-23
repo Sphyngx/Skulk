@@ -9,10 +9,7 @@ public class AIMovement : MonoBehaviour
     [SerializeField] float MoveSpeed;
     void Update()
     {
-        Vector3 MoveDirection = AiBrain.RandomDestination - gameObject.transform.position;
-        if (!AiBrain.AtDestination)
-        {
+        Vector3 MoveDirection = AiBrain.Destination - gameObject.transform.position;
             Controller.SimpleMove(MoveDirection.normalized * MoveSpeed);
-        }
     }
 }

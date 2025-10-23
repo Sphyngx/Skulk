@@ -14,7 +14,7 @@ public class AIEyes : MonoBehaviour
     {
        if (Vector3.Distance(gameObject.transform.position,Player.transform.position) < VisionRange)
         {
-            Look();
+            SeeingPlayer = Look();
         }
         else
         {
@@ -28,18 +28,17 @@ public class AIEyes : MonoBehaviour
             float AngleToPlayer = Vector3.Angle(gameObject.transform.forward, Player.transform.position - gameObject.transform.position);
             if (AngleToPlayer <  VisionAngle)
             {
-                SeeingPlayer = true;
+                return true;
             }
             else
             {
-                SeeingPlayer = false;
+                return false;
             }
         }
         else
         {
-            SeeingPlayer = false;
+            return false;
         }
-            return SeeingPlayer;
     }
 
     private void OnDrawGizmos()
