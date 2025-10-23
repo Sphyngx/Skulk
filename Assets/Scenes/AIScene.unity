@@ -1243,12 +1243,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1686901341}
   Destination: {x: 0, y: 0, z: 0}
+  NextDestination: {x: 0, y: 0, z: 0}
   RoamPriority: 1
-  SeekPriority: 0
+  SeekPriority: 1
   RoamBehaviour: 1
   RoamRange: 10
   SeekBehavior: 0
-  Target: {fileID: 0}
   ThinkTimer: 1
 --- !u!1 &1686901341
 GameObject:

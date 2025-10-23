@@ -9,7 +9,7 @@ public class AIBrain : MonoBehaviour
     AIEyes AIEyes;
     [SerializeField] GameObject Player;
     public Vector3 Destination;
-    Vector3 NextDestination;
+    [SerializeField]Vector3 NextDestination;
     [Header("BehaiviorPriority")]
     [SerializeField] float RoamPriority;
     [SerializeField] float SeekPriority;
@@ -25,7 +25,7 @@ public class AIBrain : MonoBehaviour
     {
         AIEyes = gameObject.GetComponent<AIEyes>();
 
-        if (AIEyes == null)
+        if (AIEyes != null && Player != null)
         {
             Debug.Log(gameObject.name + " Succesfully got all components for (AIBrain.cs)");
         }
@@ -56,10 +56,12 @@ public class AIBrain : MonoBehaviour
         {
             if (RoamBehaviour)
             {
+                Debug.Log(gameObject.name + " Thought to \"Roam\"");
                 NextDestination += Roam();
             }
             else if (SeekBehavior)
             {
+                Debug.Log(gameObject.name + " Thought to \"Seek\"");
                 NextDestination += Seek();
             }
             if (Vector3.Distance(gameObject.transform.position, Destination) < 1)
@@ -86,8 +88,9 @@ public class AIBrain : MonoBehaviour
     {
         if (AIEyes.SeeingPlayer)
         {
+            Debug.Log("test!");
             Vector3 DesiredPosition = Player.transform.position + (Player.transform.position - gameObject.transform.position).normalized * 10;
-            return DesiredPosition * SeekPriority;
+            return new Vector3(10,0,10) * SeekPriority;
         }
         return Vector3.zero;
     }
