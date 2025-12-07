@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AIMovement : MonoBehaviour
 {
-    [SerializeField] CharacterController Controller;
+    public CharacterController Controller;
     [SerializeField] AIBrain AiBrain;
-    [SerializeField] float MoveSpeed;
     void Update()
     {
-        Vector3 MoveDirection = AiBrain.Destination - gameObject.transform.position;
-            Controller.SimpleMove(MoveDirection.normalized * MoveSpeed);
+        if (this.AiBrain.MaxSpeed < this.AiBrain.Steering.magnitude)
+        {
+            AiBrain.Steering = AiBrain.Steering.normalized * AiBrain.MaxSpeed;
+        }
+        Controller.SimpleMove(AiBrain.Steering);
     }
 }

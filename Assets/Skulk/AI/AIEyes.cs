@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AIEyes : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class AIEyes : MonoBehaviour
     public bool SeeingPlayer;
     [SerializeField] float VisionRange;
     [SerializeField] float VisionAngle;
+
+    [SerializeField] bool showDebug = false;
     private void Update()
     {
        if (Vector3.Distance(gameObject.transform.position,Player.transform.position) < VisionRange)
@@ -19,6 +22,10 @@ public class AIEyes : MonoBehaviour
         else
         {
             SeeingPlayer = false;
+        }
+       if (SeeingPlayer) //LookAt PLayer
+        {
+            transform.rotation = Quaternion.LookRotation(Player.transform.position - gameObject.transform.position,gameObject.transform.up);
         }
     }
     bool Look()
@@ -43,6 +50,8 @@ public class AIEyes : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!showDebug) return;
+
         if (SeeingPlayer) 
         {
             Gizmos.color = Color.green;

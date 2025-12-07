@@ -49,6 +49,7 @@ public class Status : MonoBehaviour
             if (Health <= 0)
             {
                 Debug.Log(gameObject.name + " has died!");
+                Destroy(gameObject);
             }
         }
     }

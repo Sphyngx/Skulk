@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class PlayerHandler : MonoBehaviour
 {
     Camera Camera;
+    CameraLookAt CameraLookAt;
 
     [NonSerialized]public GameObject Orientation;
     [NonSerialized]public Vector3 OrientationX;
@@ -41,6 +42,7 @@ public class PlayerHandler : MonoBehaviour
 
         Player = gameObject;
         this.Camera = gameObject.GetComponent<Camera>();
+        CameraLookAt = gameObject.GetComponent<CameraLookAt>();
 
         if (Player != null && Orientation != null && PlayerModel != null)
         {
@@ -55,9 +57,9 @@ public class PlayerHandler : MonoBehaviour
     }
     void Update()
     {
-        if (Camera.UserLookAt)
+        if (CameraLookAt.UserLookAt)
         {
-            Orientation.transform.forward = Camera.LookAtTarget(Camera.UserLookAt, Camera.ScriptedLookAt);
+            Orientation.transform.forward = CameraLookAt.LookAtTarget(CameraLookAt.UserLookAt, CameraLookAt.ScriptedLookAt);
             OrientationX = Orientation.transform.forward;
             OrientationX.y = 0;
             OrientationX.Normalize();
