@@ -12,7 +12,7 @@ public class WeaponEventReciever : MonoBehaviour
         Status OponentStatus = Hit.gameObject.GetComponent<Status>();
         if (OponentStatus != null)
         {
-                OponentStatus.DealDamage(HumanoidCombat.Damage);
+            OponentStatus.DealDamage(HumanoidCombat.Damage);    
         }
     }
     public void EndParryWindow()

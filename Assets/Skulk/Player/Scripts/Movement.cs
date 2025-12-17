@@ -41,5 +41,11 @@ public class Movement : MonoBehaviour
         Controller.SimpleMove(MoveDirection * PlayerMoveSpeed);
         
         //Add jump logic?
+
+        //Add Dodge
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            Controller.Move(MoveDirection * 50);
+        }
     }
 }

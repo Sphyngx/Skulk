@@ -195,6 +195,14 @@ PrefabInstance:
       propertyPath: UserLookAt
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5863227966334065684, guid: ab47e43441692c8439727b53c0f2f3de, type: 3}
+      propertyPath: CameraOfset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863227966334065684, guid: ab47e43441692c8439727b53c0f2f3de, type: 3}
+      propertyPath: CameraOfset.z
+      value: -3
+      objectReference: {fileID: 0}
     - target: {fileID: 6190611610423299600, guid: ab47e43441692c8439727b53c0f2f3de, type: 3}
       propertyPath: JumpPower
       value: 5

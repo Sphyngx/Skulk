@@ -8,7 +8,7 @@ public class Status : MonoBehaviour
     [SerializeField]HumanoidCombat HumanoidCombat;
     [SerializeField]int Health;
     [SerializeField]int Posture;
-
+    [SerializeField] ParticleSystem[] ParryParticles;
     
     private void Start()
     {
@@ -33,6 +33,10 @@ public class Status : MonoBehaviour
         {
             Debug.Log(gameObject + " Parried an attack");
             HumanoidCombat.Animator.SetTrigger("ParryTrigger");
+            for (int i = 0; i < ParryParticles.Length; i++)
+            {
+                ParryParticles[i].Play();
+            }
         }
         else if (HumanoidCombat.IsBlocking)
         {
